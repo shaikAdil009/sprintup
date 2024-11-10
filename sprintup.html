@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Sprint up</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 20px;
+           position: fixed;
+           top: 0;
+           left: 0;
+           right: 0;
+           z-index: 9999;
+           background-color: white;
+
+        }
+
+        .navbar span {
+            font-weight: bold;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            color: black;
+        }
+
+        .navbar .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        #Home {
+            color: blue;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            color: black;
+            font-weight: bold;
+        }
+
+        .navbar ul li a:hover {
+            color: blue;
+            border-radius: 4px;
+        }
+
+        .navbar .login-signup {
+            display: flex;
+        }
+
+        .navbar .login-signup a {
+            margin-left: 10px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .navbar .login-signup a:hover {
+            background-color: lightslategray;
+        }
+
+        #sign {
+            background-color: blue;
+            color: white;
+        }
+
+        .sliding-text-container {
+            width: 100%;
+            background-color: orange;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+            align-items: center;
+            margin-top: 12vh;
+        }
+
+        .sliding-text-header-2 {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 17px;
+            opacity: 0;
+            /* Initially invisible */
+            transition: transform 0.5s ease-out, opacity 0.5s ease;
+            /* Smooth transition */
+        }
+
+        .visible {
+            opacity: 1;
+            /* Make visible when it reaches the center */
+        }
+
+        .conten {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10vh;
+        }
+
+        .outer-box {
+            width: 500px;
+            height: 520px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            background-image: url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQq79L60Uxgz2uXYTqsVF7SMYjIg-poFAyMInS7ZNiWmJh0TRK1);
+            object-fit: cover;
+            background-size: contain;
+        }
+
+        .inner-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .sliding-text,
+        .sliding-image {
+            position: absolute;
+            transition: left 1s ease-in-out;
+        }
+
+        /* Text stays on the left */
+        .sliding-text {
+            top: 20px;
+            left: -100%;
+            /* Start text off-screen to the left */
+            font-size: 35px;
+            font-weight: bold;
+            color: black;
+            padding: 10px;
+            white-space: nowrap;
+        }
+
+        .sliding-image {
+            bottom: 10px;
+            left: -100%;
+            /* Start image off-screen to the left */
+            width: 350px;
+            /* Set image width to 350px */
+            height: 300px;
+            /* Set image height to 350px */
+        }
+
+        .sliding-text span {
+            font-size: 15px;
+            background-color: black;
+            color: white;
+            padding: 5px;
+        }
+
+        /* First slide */
+        .active-1 .text-1 {
+            left: 10px;
+            /* Text slides in and stays on the left */
+        }
+
+        .active-1 .image-1 {
+            left: 140px;
+            /* Image slides to the right */
+        }
+
+        /* Second slide */
+        .active-2 .text-2 {
+            left: 10px;
+            /* Text stays on the left */
+        }
+
+        .active-2 .image-2 {
+            left: 140px;
+            /* Image slides to the right */
+        }
+
+        /* Third slide */
+        .active-3 .text-3 {
+            left: 10px;
+            /* Text stays on the left */
+        }
+
+        .active-3 .image-3 {
+            left: 140px;
+            /* Image slides to the right */
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.24);
+            max-width: 400px;
+            width: 100%;
+
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .date-time {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .date-time input {
+            width: calc(50% - 5px);
+        }
+
+        .date-time input:hover {
+            background-color: lightsteelblue;
+            color: black;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .header-text {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #box-container {
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 5vh;
+        }
+
+        #box-container h4 {
+            text-align: center;
+            color: lightskyblue;
+        }
+
+        #box-container h1 {
+            color: gray;
+        }
+
+
+        #classmate {
+            color: yellow;
+            font-size: 2.2rem;
+        }
+
+        .all {
+            border: 1px solid gray;
+            margin-top: 5vh;
+            background-color: #03002e;
+            border: none;
+
+        }
+
+        .flex-item {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .job-path {
+            width: 100%;
+            height: 50px;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
+        }
+
+        .job-path h4 {
+            margin-left: 2vh;
+        }
+
+        .section-title {
+            width: 300px;
+            border: 1px solid gray;
+            color: black;
+            background-color: white;
+            transition: 1s;
+        }
+        .section-title:hover{
+             transform: scale(1.2);
+             z-index: 1;
+             background-image: url(data:image/jpeg;base64,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);
+             background-size: cover;
+        }
+          
+        .right {
+            margin-left: 3vh;
+            font-size: 0.9rem;
+        }
+
+        .placement {
+            width: 100%;
+            height: 50px;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
+        }
+
+        .placement h4 {
+            margin-left: 2vh;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10vh;
+        }
+
+        .know-more-btn {
+            background-color: yellow;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .know-more-btn:hover {
+            background-color: darkorange;
+        }
+
+        .info-container {
+            max-width: 100%;
+            height: 120px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: darkblue;
+            color: white;
+            margin-top: 5vh;
+        }
+
+        .info-container span {
+            color: white;
+        }
+
+        .info-inline {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        .info-item {
+            margin: 0 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        .info-value {
+            margin-left: 5px;
+            color: #333;
+        }
+
+        .learning-section {
+            width: 100%;
+        }
+
+        #WHY-CHOOSE-US {
+            text-align: center;
+            margin-top: 8vh;
+            color: lightskyblue;
+        }
+
+        .Our-Program-learning {
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        #real-world {
+            color: yellow;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+
+        .card {
+            width: 300px;
+            height: 430px;
+            perspective: 1000px;
+            margin-top: 3vh;
+        }
+
+        .card-front,
+        .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.5rem;
+        }
+
+        .card-front {
+            background-color: #6960Ec;
+            border: none;
+        }
+
+        .card-back {
+            background-color: white;
+            text-align: center;
+            transform: rotateY(180deg);
+        }
+
+        .card:hover .card-front {
+            transform: rotateY(180deg);
+        }
+
+        .card:hover .card-back {
+            transform: rotateY(360deg);
+        }
+
+        .card-front,
+        .card-back {
+            transition: transform 0.6s ease;
+        }
+
+        #our-programs {
+            color: white;
+            margin-left: 2vh;
+        }
+
+        #learning {
+            margin-left: 2vh;
+            color: white;
+
+        }
+
+        #img {
+            display: block;
+            justify-content: center;
+            margin: 0 auto;
+
+        }
+
+        #img-2 {
+            display: block;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        #card-2 {
+            background-color: lightseagreen;
+        }
+
+        #img-3 {
+            justify-content: center;
+            display: block;
+            margin: 0 auto;
+            height: 200px;
+        }
+
+        #rotate {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid white;
+            background-color: white;
+            margin-left: 70%;
+        }
+
+        #rotate img {
+            display: block;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 5px;
+        }
+
+        .fixed-icons {
+            float: right;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: fixed;
+            top: 50%;
+            left: 95%;
+            margin-right: 10vh;
+        }
+
+        .fixed-icons i {
+            font-size: 24px;
+            color: white;
+            background-color: green;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        #arrow {
+            color: black;
+        }
+
+        .fixed-icons .up-arrow {
+            background-color: orange;
+            display: none;
+            /* Initially hidden */
+        }
+
+        .fixed-icons i:hover {
+            opacity: 0.8;
+        }
+
+
+        .team {
+            width: 100;
+            background-color: white;
+        }
+
+        #our-team {
+            text-align: center;
+            padding: 70px;
+        }
+
+        #our-team span {
+            font-size: 15px;
+            color: gray;
+            font-weight: bold;
+        }
+
+        hr {
+            width: 10%;
+            height: 3px;
+            border: none;
+            background-color: orange;
+
+        }
+
+
+        .team-member {
+            display: flex;
+            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            gap: 80px;
+            margin-top: -8vh;
+        }
+
+        .team-member-1 img {
+            height: 220px;
+        }
+
+        .team-member-1 h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .team-member-1 span {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /*team member-2*/
+        .team-member-2 img {
+            height: 220px;
+        }
+
+        .team-member-2 h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .team-member-2 span {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /*team member-3*/
+        .team-member-3 img {
+            height: 220px;
+        }
+
+        .team-member-3 h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .team-member-3 span {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .icon-1 {
+            display: flex;
+            gap: 10px;
+            height: 100px;
+        }
+
+        .icon-2 {
+            display: flex;
+            gap: 10px;
+            height: 100px;
+            margin-top: 3vh;
+        }
+
+        .icon-twitter-whatsapp {
+            display: flex;
+            gap: 10px;
+            height: 100px;
+        }
+
+
+        .live {
+            width: 100%;
+            background-color: #fcf5f1;
+            padding-top: 30px;
+        }
+
+        .form-container-2 {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.24);
+            max-width: 500px;
+            padding: 20px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+
+        #center-form {
+            margin: auto;
+        }
+/* The popup form (hidden by default) */
+#popupForm{
+    display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000; /* On top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}  
+
+/* Form container */
+.form-container-3 {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  position: relative;
+}
+.form-container-3 h4{
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 24px;
+  cursor: pointer;
+}
+input[type="email"],
+input[type="number"]{
+    width: 95%;
+    padding: 8px;
+    color: gray;
+}
+#dt-tm{
+    margin-top: 2vh;
+}
+#submit{
+    width: 90%;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    padding: 8px;
+    text-align: center;
+    background-color: darkblue;
+    border: none;
+    color: white;
+}
+
+
+   /*footer*/
+   .footer {
+  background-color: black;
+  padding: 20px;
+  margin-top: 10vh;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 15vh;
+  background-color: #333;
+  color: white;
+  width: 70%;
+  height: 80px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.footer p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-images {
+  display: flex;
+  gap: 15px;
+}
+.footer-images img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 1s;
+}
+.footer-images img:hover{
+     transform: scale(1.2);
+     z-index: 2;
+     border-color: orange;
+     border: 1px solid orange;
+}
+.navbar-2{
+    display: flex;
+}
+.navbar span {
+            font-weight: bold;
+        }
+        .navbar-2{
+            margin-left: 20vh;
+            margin-top: 5vh;
+        }
+         .logo-2 {
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            color:white;
+
+        }
+
+         .logo-2 img {
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .flex-box{
+            color: white;
+            display: flex;
+            justify-content: space-around;
+        }
+        .section-home-2 a{
+            color: gray;
+        }
+        .section-home a{
+            color: gray;
+        }
+        .numbers a{
+            color: gray;
+        }
+        .section-home-2 a:hover{
+            color: white;
+        }
+        .section-home a:hover{
+            color: white;
+        }
+        .numbers a:hover{
+            color: white;
+        }
+        .social-icons a {
+  color: white;
+  font-size: 20px;
+  margin-right: 15px;
+  margin-top: 3vh;
+}
+#popupForm label{
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+        @media only screen and (max-width: 425px) {
+            .conten {
+                flex-direction: column;
+                width: 100%;
+                row-gap: 40px;
+            }
+
+            .width {
+                width: 100%;
+            }
+
+            #body-width {
+                width: 100%;
+            }
+
+            .sliding-text-container {
+                width: 100%;
+            }
+
+            .outer-box {
+                width: 100%;
+            }
+
+            .conten img {
+                display: block;
+                margin: 0 auto;
+                width: 50%;
+                height: 280px;
+            }
+
+            #arrow.arrow-2 {
+                position: absolute;
+                right: 0;
+            }
+
+            .form-container {
+                width: 90%;
+                max-width: 400px;
+                height: 50%;
+            }
+
+
+            #box-container {
+                text-align: center;
+            }
+
+            #classmate {
+                font-size: 1.9rem;
+            }
+
+            #classmate span {
+                font-size: 1.3rem;
+            }
+
+            .flex-item {
+                flex-direction: column;
+            }
+
+            .section-title {
+                margin: 0 auto;
+            }
+
+            .info-container {
+                flex-direction: column;
+                height: 100%;
+
+            }
+
+            .info-inline {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .info-inline h2 {
+                font-size: 1.6rem;
+            }
+
+            .Our-Program-learning {
+                font-size: 0.8rem;
+            }
+
+            .card-container {
+                flex-direction: column;
+            }
+
+            #form-2 {
+                gap: 30px;
+            }
+
+            .navbar {
+                flex-direction: column;
+
+            }
+
+            .logo span {
+                font-size: 15px;
+            }
+
+            .know-more-btn {
+                display: flex;
+            }
+
+            .gurante h1,
+            h3,
+            h4 {
+                margin-left: 4vh;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+            }
+
+            .flex-box {
+                flex-direction: column;
+                margin-left: 0 auto;
+                margin-right: 0 auto;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .team-member {
+                flex-direction: column;
+                margin-left: 20vh;
+            }
+        }
+    </style>
+
+<body>
+    <div id="body-width">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="https://ed-tech-frontend-client-view.onrender.com/assets/logo.svg" alt="Logo">
+                <span>Sprint Up</span>
+            </div>
+            <ul>
+                <li><a href="#" id="Home">Home</a></li>
+                <li><a href="#box-container">Courses</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="login-signup">
+                <a href="#">Login</a>
+                <a href="#" id="sign">Sign Up</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="sliding-text-container">
+        <div class="sliding-text-header" id="slidingText-header2">New Bach is starting in August & septemper🚀</div>
+    </div>
+    <div class="width">
+        <div class="conten">
+            <div class="outer-box">
+                <div class="inner-box" id="innerBox">
+                    <!-- First Text and Image -->
+                    <div class="sliding-text text-1">IN-CLASS SESSIONS <BR>BY THE BEST<BR> <span>+ Live in class session
+                            for optimum learning <br>+ in class dedicate doubt clearance</span></div>
+                    <img src="https://www.sprintup.in/assets/carousal/in-Class.svg" alt="Image 1"
+                        class="sliding-image image-1">
+
+                    <!-- Second Text and Image -->
+                    <div class="sliding-text text-2">FIND THE RIGHT JOB <BR>FOR YOU <br> <SPAN>+ Guranteed job on course
+                            completion<br>+ At list 4 mock interview</SPAN></div>
+                    <img src="https://www.sprintup.in/assets/carousal/jobs.svg" alt="Image 2"
+                        class="sliding-image image-2">
+
+                    <!-- Third Text and Image -->
+                    <div class="sliding-text text-3">MOST INTERACTIVE <BR>COURSE <BR><SPAN>+ Guranted 2-month
+                            internship<br>+ Work on 4 real-world projects</SPAN></div>
+                    <img src="https://www.sprintup.in/assets/carousal/course.svg" alt="Image 3"
+                        class="sliding-image image-3">
+                </div>
+            </div>
+            <div class="form-container">
+                <div class="header-text">
+                    <h2>Build Your Tech Career</h2>
+                    <h3>Best full-stack course designed by IIT & BITS alums</h3>
+                </div>
+                <form>
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" name="full-name" placeholder="🙎🏻‍♂Full Name" required>
+
+                    <label for="mobile-number">Mobile Number</label>
+                    <input type="tel" id="mobile-number" name="mobile-number" placeholder="📞10 digits Mobile Number"
+                        required>
+
+                    <label for="preference">Preference</label>
+                    <select id="preference" name="preference" required>
+                        <option value="">No Preference</option>
+                    </select>
+
+                    <div class="date-time">
+                        <input type="text" value="11 August" disabled>
+                        <input type="text" value="11:00 AM" disabled>
+                    </div>
+
+                    <div class="date-time">
+                        <input type="text" value="18 August" disabled>
+                        <input type="text" value="04:00 PM" disabled>
+                    </div>
+                    <button type="submit">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="all">
+        <div id="box-container">
+            <h4>COURSE OVERVIEW</h2>
+                <h1><span id="classmate">In-Classroom</span> MERN Full-Stack Web Development Course</h1>
+        </div>
+        <div class="flex-item">
+            <div class="section-title">
+                <div class="job-path">
+                    <h4>Job Path</h4>
+                </div>
+                <div class="right">
+                    <h2 id="courses">Curriculum</h2>
+                    <p>Our curriculum emphasizes foundational skills that will equip you for a lifetime of success and
+                        adaptability in your career.</p>
+                    <ul>
+                        <li>+ Logical reasoning and DSA</li>
+                        <li>+ Frontend with React.js</li>
+                        <li>+ Backend with Node.js</li>
+                        <li>+ 4 real-world projects</li>
+                    </ul>
+                    <p>Open to all disciplines</p>
+                </div>
+            </div>
+            <div class="section-title">
+                <div class="placement">
+                    <h4>Job Path</h4>
+                </div>
+                <div class="right">
+                    <h2>Placement</h2>
+                    <p>We guarantee 100% placement upon course completion. Our partnership with top tech firms will
+                        ensure we find the right job for you.</p>
+                    <ul>
+                        <li>+ 2-month internship</li>
+                        <li>+ 4+ mock interviews</li>
+                        <li>+ 1:1 placement support</li>
+                        <li>+ Job guarantee on course completion</li>
+                    </ul>
+                    <p>15+ Partner companies & growing</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="#" class="know-more-btn">Know More</a>
+        </div>
+        <div class="info-container">
+            <div class="info-inline">
+                <h2>We'll Find The<br> Right Job For You</h2>
+                <div class="info-item">
+                    <span class="info-label">7 Months</span><br>
+                    <span class="info-value"> Duration</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"> 15+ Companies</span><br>
+                    <span class="info-value">Partners</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">100% Placement</span><br>
+                    <span class="info-value">Guarantee</span>
+                </div>
+            </div>
+        </div>
+        <div class="learning-section">
+            <div id="WHY-CHOOSE-US">
+                <h3 id="WHY-CHOOSE-US">WHY CHOOSE US?</h3>
+            </div>
+            <div class="Our-Program-learning">
+                <h1>Our Program Maximises<span id="real-world"> Real-World Learning</span></h1>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-front">
+                        <h3 id="our-programs">Our Program </h3>
+                        <p id="learning">Specially curated for real-world learning</p>
+                        <img id="img" height="200px"
+                            src="https://ed-tech-frontend-client-view.onrender.com/assets/why_choose_us/OurProgram.svg">
+                        <div id="rotate">
+                            <img height="30px"
+                                src="data:image/jpeg;base64,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">
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <img height="40px" src="https://ed-tech-frontend-client-view.onrender.com/assets/logo.svg">
+                        <p>We have gone beyond the basic tech courses. Our program integrates skills such as logical
+                            reasoning, mental frameworks, and other methodologies. We aim to establish a robust
+                            foundation for our students' learning journey.</p>
+                        <img width="30px"
+                            src="data:image/jpeg;base64,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">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-front" id="card-2">
+                        <h3 id="our-programs">Our Centre</h3>
+                        <p id="learning">Dedicated centre for your
+                            all-round growth</p>
+                        <img height="200px" id="img-2"
+                            src="https://ed-tech-frontend-client-view.onrender.com/assets/why_choose_us/OurCenter.svg">
+                        <div id="rotate">
+                            <img height="30px"
+                                src="data:image/jpeg;base64,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">
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <img width="40px" id="img"
+                            src="https://ed-tech-frontend-client-view.onrender.com/assets/logo.svg">
+                        <p>We are establishing a distinguished centre for learning that aspires to be recognised
+                            nationally. Our primary emphasis lies in cultivating an environment conducive to top-quality
+                            classroom education, peer learning, and nurturing a healthy atmosphere.</p>
+                        <img width="30px"
+                            src="data:image/jpeg;base64,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">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-front" id="card-3">
+                        <h3 id="our-programs">Our Team</h3>
+                        <p id="learning">Best team to support you
+                            all the way</p>
+                        <img id="img-3"
+                            src="https://ed-tech-frontend-client-view.onrender.com/assets/why_choose_us/OurTeam.svg">
+                        <div id="rotate">
+                            <img height="30px"
+                                src="data:image/jpeg;base64,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">
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <img width="40px" src="https://ed-tech-frontend-client-view.onrender.com/assets/logo.svg">
+                        <p>We are meticulously building a team to guide you every step of the way. Through 1:1
+                            mentorship, interactive doubt-clearing sessions, and punctual feedback mechanisms, we are
+                            building a culture that prioritises and supports your continuous growth.</p>
+                        <img width="30px"
+                            src="data:image/jpeg;base64,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">
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <a href="#" class="know-more-btn">Know More</a>
+            </div>
+        </div>
+        <div class="team">
+            <h1 id="our-team">OUR TEAM<br><span>Fueled with passion for learning</span>
+                <hr>
+            </h1>
+            <div class="team-member">
+                <div class="team-member-1">
+                    <img src="https://www.sprintup.in/assets/ourTeam/vaibhav_gupta.png">
+                    <h3>VAIBHAV GUPTA<br>
+                        <span>Co-founder, Instructor<br>
+                            IIT Delhi, IIM Ahmedabad</span>
+                    </h3>
+                    <div class="icon-1">
+                        <a href="https://www.linkedin.com/in/vaibhavgupta387/" target="_blank">
+                            <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                        </a>
+                        <a href="https://www.instagram.com/vaibhav.g17/" target="_blank">
+                            <i class="fab fa-instagram" style="color: #C13584;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="team-member-2">
+                    <img src="https://www.sprintup.in/assets/ourTeam/naman_gupta.png">
+                    <h3>NAMAN GUPTA
+                        <br>
+                        <span> Co-founder, Instructor<br>
+                            BITS Pilani
+                        </span>
+                        <div class="icon-2">
+                            <a href="https://www.linkedin.com/in/naman-gupta-247548143/" target="_blank">
+                                <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                            </a>
+                            <a href="https://www.instagram.com/knamangupta/" target="_blank">
+                                <i class="fab fa-instagram" style="color: #C13584;"></i>
+                            </a>
+                        </div>
+                    </h3>
+                </div>
+                <div class="team-member-3">
+                    <img src="https://www.sprintup.in/assets/ourTeam/harihar_menon.png">
+                    <h3>HARIHAR MENON
+                        <br>
+                        <span>Instructor<br>
+                            BITS Goa
+                        </span>
+                    </h3>
+                    <div class="icon-twitter-whatsapp">
+                        <a href="https://www.linkedin.com/in/harihar-menon/" target="_blank">
+                            <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank">
+                            <i class="fab fa-instagram" style="color: #C13584;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!---book live section-->
+
+    <div class="center-form">
+        <div class="form-container-2">
+            <div class="header-text">
+                <h2>Build Your Tech Career</h2>
+                <h3>Best full-stack course designed by IIT & BITS alums</h3>
+            </div>
+            <form>
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="🙎🏻‍♂Full Name" required>
+
+                <label for="mobile-number">Mobile Number</label>
+                <input type="tel" id="mobile-number" name="mobile-number" placeholder="📞10 digits Mobile Number"
+                    required>
+
+                <label for="preference">Preference</label>
+                <select id="preference" name="preference" required>
+                    <option value="">No Preference</option>
+                </select>
+
+                <div class="date-time">
+                    <input type="text" value="11 August" disabled>
+                    <input type="text" value="11:00 AM" disabled>
+                </div>
+
+                <div class="date-time">
+                    <input type="text" value="18 August" disabled>
+                    <input type="text" value="04:00 PM" disabled>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+        </div>
+        
+
+
+    <!-- WhatsApp Icon with inner color fill -->
+    <div class="fixed-icons">
+        <!-- Up Arrow Icon -->
+        <i id="arrow" class="fas fa-arrow-up up-arrow" onclick="scrollToTop()"></i>
+        <!-- WhatsApp Icon -->
+        <a href="https://api.whatsapp.com/send/?phone=9948187802&text&type=phone_number&app_absent=0" target="_blank">
+            <i id="arrow-2" class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!---popup form-->
+    <div id="popupForm" class="popup-form">
+        <div class="form-container-3">
+          <span class="close-btn" onclick="closeForm()">&times;</span>
+          <h4>Build Your Tech Career <span>Best full-stack course designed by IIT & BITS alums</span></h4>
+          <form action="/submit" method="POST">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">MOBILE NUMBER:</label>
+            <input type="number" id="email" name="number" required>
+            <div class="date-time" id="dt-tm">
+                <input type="text" value="11 August" disabled>
+                <input type="text" value="11:00 AM" disabled>
+            </div>
+
+            <div class="date-time">
+                <input type="text" value="18 August" disabled>
+                <input type="text" value="04:00 PM" disabled>
+            </div>
+            <input type="submit" id="submit" value="Book Now">
+          </form>
+        </div>
+      </div>
+       
+      <footer class="footer">
+        <div class="footer-content">
+          <h2>Built by Barabari Student Mentors</h2>
+          <div class="footer-images">
+          <a href="https://www.linkedin.com/feed/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0gqblLcfiZ89hEgHAI_H4kqKt-ez9xgVOvg&s"></a>
+          </div>
+        </div>
+        <div id="flex-footer">
+        <div class="navbar-2">
+            <div class="logo-2">
+                <img src="https://ed-tech-frontend-client-view.onrender.com/assets/logo.svg">
+                <span>Sprint Up</span>
+                </div>
+            </div>
+            </div>
+            <div class="flex-box">
+            <div class="numbers">
+                <p> <a href="#"> 📞+91 9948187802</a><p>
+                    <p> <a href="#"> 📞+91 9948187802</a><p></p>
+                    <p> <a href="#">   📧 adilsk5655@gmail.com</a></p>                     
+                </div>
+                <div class="section-home">
+                 <p><a href="#">Home</a></p>
+                 <p><a href="#">Courses</a></p>
+                 <p><a href="#">About Us</a></p>
+                 <p><a href="#">Contact Us</a></p>
+                </div>
+                <div class="section-home-2">
+                    <p><a href="#">FAQs</a></p>
+                 <p><a href="#">Terms of Use</a></p>
+                 <p><a href="#">privacy policy</a></p>
+                </div>
+            </div>
+            
+      </footer>
+</div>
+    <script>
+
+        const text = document.getElementById("slidingText-header2");
+        const messages = [
+            "Hurry! limited seats& scholarship availabel ⏰",
+            "lucknows top offline MERN Full-stock program 💻",
+        ];
+
+        let currentMessageIndex = 0;
+
+        function updateMessage() {
+            // Update the text with the next message
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            text.textContent = messages[currentMessageIndex];
+        }
+
+        function slideToCenter() {
+            // Reset position
+            text.style.transform = "translateX(100%)";
+            text.classList.remove("visible");
+
+            // After a short delay, move the text to the center
+            setTimeout(() => {
+                text.style.transform = "translateX(0)";
+                text.classList.add("visible");
+            }, 100);
+
+            // Change the message after it has paused in the center
+            setTimeout(() => {
+                updateMessage();
+                slideToCenter(); // Repeat the process
+            }, 5000); // Adjust delay for how long it stays in the center
+        }
+
+        // Start the sliding animation
+        slideToCenter();
+
+
+        const innerBox = document.getElementById('innerBox');
+
+        // Function to reset sliding
+        function resetSlides() {
+            innerBox.classList.remove('active-1', 'active-2', 'active-3');
+        }
+
+        // Function to slide elements sequentially and loop
+        function slideInLoop() {
+            setTimeout(() => {
+                resetSlides(); // Reset before first slide
+                innerBox.classList.add('active-1'); // Slide the first text and image
+            }, 500); // Delay for the first slide
+
+            setTimeout(() => {
+                resetSlides(); // Reset before second slide
+                innerBox.classList.add('active-2'); // Slide the second text and image
+            }, 15000); // 15-second delay for the second slide
+
+            setTimeout(() => {
+                resetSlides(); // Reset before third slide
+                innerBox.classList.add('active-3'); // Slide the third text and image
+            }, 20000); // 15-second delay for the third slide
+        }
+
+        // Start sliding in a loop
+        function startLoop() {
+            slideInLoop(); // Start the first loop
+            setInterval(() => {
+                slideInLoop(); // Repeat the loop
+            }, 30000); // 15 seconds delay for each slide (45 seconds total for 3 slides)
+        }
+
+        // Initiate the sliding loop
+        startLoop();
+
+
+        // Function to scroll to the top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show the arrow only when scrolled down
+        window.onscroll = function () {
+            const upArrow = document.querySelector('.up-arrow');
+            if (document.documentElement.scrollTop > 100) {
+                upArrow.style.display = 'block';
+            } else {
+                upArrow.style.display = 'none';
+            }
+        };
+
+
+        // Function to show the pop-up when the page loads
+        // Show the form when the page loads
+window.onload = function() {
+  document.getElementById('popupForm').style.display = 'block';
+};
+
+// Close the form
+function closeForm() {
+  document.getElementById('popupForm').style.display = 'none';
+}
+
+
+
+
+    </script>
+
+</body>
+
+</html>
